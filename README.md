@@ -12,7 +12,7 @@ This project is a web application for browsing vehicles. It uses Next.js for sta
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/car-dealer-app.git
+   git clone https://github.com/Reject-4444/car-dealer-app.git
    cd car-dealer-app
 
 2. Install:
