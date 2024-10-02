@@ -1,5 +1,4 @@
 import React from 'react';
-import VehicleModels from './VehicleModels';
 import { VehicleModel } from '../../types';
 
 interface ResultCardProps {

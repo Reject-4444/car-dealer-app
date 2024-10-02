@@ -21,11 +21,11 @@ const Home = ({ makes }: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const makesData = await getVehicleMakes();
+  const makes = await getVehicleMakes();
 
   return {
     props: {
-      makes: makesData,
+      makes,
     },
   };
 };
