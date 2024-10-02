@@ -32,34 +32,49 @@ const ResultPage: React.FC<ResultPageProps> = ({ makeId, year, models }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const makes = await getVehicleMakes();
-  const years = getYearsRange(startFromYear, new Date().getFullYear());
+  try {
+    const makes = await getVehicleMakes();
+    const years = getYearsRange(startFromYear, new Date().getFullYear());
 
-  const paths = makes.flatMap((make) =>
-    years.map((year) => ({
-      params: {
-        makeId: make.MakeId.toString(),
-        year: year.toString(),
-      },
-    }))
-  );
-  return {
-    paths,
-    fallback: 'blocking',
-  };
+    const paths = makes.flatMap((make) =>
+      years.map((year) => ({
+        params: {
+          makeId: make.MakeId.toString(),
+          year: year.toString(),
+        },
+      }))
+    );
+
+    return {
+      paths,
+      fallback: 'blocking',
+    };
+  } catch (error) {
+    console.error('Error fetching vehicle makes or generating paths:', error);
+    return {
+      paths: [],
+      fallback: 'blocking',
+    };
+  }
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { makeId, year } = context.params as { makeId: string; year: string };
-  const models = await getVehicleModels(makeId, Number(year));
 
-  return {
-    props: {
-      makeId,
-      year: Number(year),
-      models,
-    },
-  };
+  try {
+    const models = await getVehicleModels(makeId, Number(year));
+    return {
+      props: {
+        makeId,
+        year: Number(year),
+        models,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
 };
 
 export default ResultPage;

@@ -21,13 +21,18 @@ const Home = ({ makes }: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const makes = await getVehicleMakes();
-
-  return {
-    props: {
-      makes,
-    },
-  };
+  try {
+    const makes = await getVehicleMakes();
+    return {
+      props: {
+        makes,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true, 
+    };
+  }
 };
 
 export default Home;
